@@ -6,17 +6,17 @@ import {
   Scripts,
   ScrollRestoration,
   useRouteLoaderData,
-} from "react-router";
+} from 'react-router';
 
-import type { Route } from "./+types/root";
+import type { Route } from './+types/root';
 
 export function loader() {
-  return { myData: "Hello"}
+  return { myData: 'Hello' };
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const data = useRouteLoaderData<typeof loader>("root");
-  console.log("myData", data?.myData);
+  const data = useRouteLoaderData<typeof loader>('root');
+  console.log('myData', data?.myData);
 
   return (
     <html lang="en">
@@ -31,7 +31,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ScrollRestoration />
         <Scripts />
         <div>
-        <p>My Data (always present in 7.5.0): {data?.myData}</p>
+          <p>My Data (always present in 7.5.0): {data?.myData}</p>
+
+          <p>{data?.myData ?? 'Oh no! Root Loader Data has dissapeared in 7.5.1!'}</p>
         </div>
       </body>
     </html>
@@ -43,15 +45,15 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
+  let message = 'Oops!';
+  let details = 'An unexpected error occurred.';
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
+    message = error.status === 404 ? '404' : 'Error';
     details =
       error.status === 404
-        ? "The requested page could not be found."
+        ? 'The requested page could not be found.'
         : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
